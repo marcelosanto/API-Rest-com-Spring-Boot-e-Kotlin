@@ -22,6 +22,11 @@ class ContactController {
         return repository.save(contact)
     }
 
+    @GetMapping("/{id}")
+    fun show(@PathVariable("id") id: Long): Contact{
+        return repository.findById(id).orElseThrow { EntityNotFoundException() }
+    }
+
     @PutMapping("/{id}")
     fun update(@PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact{
         val contact = repository.findById(id).orElseThrow { EntityNotFoundException() }
