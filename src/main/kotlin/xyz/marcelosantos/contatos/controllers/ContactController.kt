@@ -33,4 +33,10 @@ class ContactController {
 
         return repository.save(contact)
     }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: Long) {
+        val contact = repository.findById(id).orElseThrow { EntityNotFoundException() }
+        repository.delete(contact)
+    }
 }
