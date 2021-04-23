@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import xyz.marcelosantos.contatos.entities.Contact
 import xyz.marcelosantos.contatos.repositories.ContactRepository
 import javax.persistence.EntityNotFoundException
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/contacts")
@@ -18,7 +19,7 @@ class ContactController {
     }
 
     @PostMapping
-    fun create(@RequestBody contact: Contact): Contact {
+    fun create(@Valid @RequestBody contact: Contact): Contact {
         return repository.save(contact)
     }
 
@@ -28,7 +29,7 @@ class ContactController {
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact{
+    fun update(@PathVariable("id") id: Long, @Valid @RequestBody newContact: Contact): Contact{
         val contact = repository.findById(id).orElseThrow { EntityNotFoundException() }
 
         contact.apply {
